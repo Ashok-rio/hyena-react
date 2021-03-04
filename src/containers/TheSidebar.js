@@ -26,8 +26,8 @@ const TheSidebar = () => {
       show={show}
       onShowChange={(val) => dispatch({type: 'set', sidebarShow: val })}
     >
-      <CSidebarBrand className="d-md-down-none" to="/">
-        <CIcon
+      <CSidebarBrand className="d-md-down-none" to="/" style={{ background: "#551b89" }}>
+        {/* <CIcon
           className="c-sidebar-brand-full"
           name="logo-negative"
           height={35}
@@ -36,7 +36,8 @@ const TheSidebar = () => {
           className="c-sidebar-brand-minimized"
           name="sygnet"
           height={35}
-        />
+        /> */}
+        <h6 style={{fontSize:'28px'}}>Hyena</h6>
       </CSidebarBrand>
       <CSidebarNav>
 
@@ -50,7 +51,7 @@ const TheSidebar = () => {
           }}
         />
       </CSidebarNav>
-      <CSidebarMinimizer className="c-d-md-down-none"/>
+      {/* <CSidebarMinimizer className="c-d-md-down-none"/> */}
     </CSidebar>
   )
 }
