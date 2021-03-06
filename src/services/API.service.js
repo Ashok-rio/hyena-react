@@ -53,3 +53,22 @@ export const CreateModule = async (body) => {
     throw error;
   }
 };
+
+export const getAllModule = async (department) => {
+  console.log(department, 'department');
+  let response;
+  try {
+    response = await fetch(`${API_URL}/module/getAll?department=${department}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    });
+    if(response) return response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+
+
