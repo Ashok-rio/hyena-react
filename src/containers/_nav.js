@@ -1,55 +1,55 @@
-import React from 'react'
-import CIcon from '@coreui/icons-react'
+import React from "react";
+import CIcon from "@coreui/icons-react";
 
-const _nav =  [
+const _nav = [
   {
-    _tag: 'CSidebarNavItem',
-    name: 'Projects',
-    to: '/projects',
-    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
+    _tag: "CSidebarNavItem",
+    name: "Department",
+    to: "/department",
+    icon: "cil-drop",
+  },
+  {
+    _tag: "CSidebarNavItem",
+    name: "Module",
+    to: "/module",
+    icon: "cil-cursor",
     // badge: {
     //   color: 'info',
     //   text: 'NEW',
     // }
   },
   {
-    _tag: 'CSidebarNavItem',
-    name: 'Module',
-    to: '/module',
-        icon: 'cil-cursor',
+    _tag: "CSidebarNavItem",
+    name: "Tools",
+    to: "/tools",
+    icon: "cil-pencil",
     // badge: {
     //   color: 'info',
     //   text: 'NEW',
     // }
   },
   {
-    _tag: 'CSidebarNavItem',
-    name: 'Tasks',
-    to: '/projects',
-        icon: 'cil-puzzle',
+    _tag: "CSidebarNavItem",
+    name: "Projects",
+    to: "/projects",
+    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
     // badge: {
     //   color: 'info',
     //   text: 'NEW',
     // }
-  },{
-    _tag: 'CSidebarNavItem',
-    name: 'Tools',
-    to: '/projects',
-      icon: 'cil-pencil',
+  },
+  
+  {
+    _tag: "CSidebarNavItem",
+    name: "Tasks",
+    to: "/projects",
+    icon: "cil-puzzle",
     // badge: {
     //   color: 'info',
     //   text: 'NEW',
     // }
-  },{
-    _tag: 'CSidebarNavItem',
-    name: 'Department',
-    to: '/department',
-        icon: 'cil-drop',
-    // badge: {
-    //   color: 'info',
-    //   text: 'NEW',
-    // }
-  }
+  },
+  
   // {
   //   _tag: 'CSidebarNavTitle',
   //   _children: ['Theme']
@@ -345,6 +345,6 @@ const _nav =  [
   //   _tag: 'CSidebarNavDivider',
   //   className: 'm-2'
   // }
-]
+];
 
-export default _nav
+export default _nav;

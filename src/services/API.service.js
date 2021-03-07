@@ -55,7 +55,6 @@ export const CreateModule = async (body) => {
 };
 
 export const getAllModule = async (department) => {
-  console.log(department, 'department');
   let response;
   try {
     response = await fetch(`${API_URL}/module/getAll?department=${department}`, {
@@ -70,5 +69,39 @@ export const getAllModule = async (department) => {
     throw error;
   }
 };
+
+export const CreateTool = async (body) => {
+  let response;
+  try {
+    response = await fetch(`${API_URL}/tool/create`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      body: JSON.stringify(body),
+    });
+    if (response) return response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getAllTools = async (department, module) => {
+  let response;
+  try {
+    response = await fetch(`${API_URL}/tool/getAll?department=${department}&&module=${module}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    });
+    if(response) return response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+
 
 

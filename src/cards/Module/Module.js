@@ -14,7 +14,6 @@ import {
   getDepartments,
   CreateModule,
   getAllModule,
-  getAllModuleByDepartment,
 } from "../../services/API.service";
 import Select from "react-select";
 import _ from "lodash";
@@ -24,7 +23,7 @@ const Module = () => {
   const [create, setCreate] = React.useState(initialState);
   const [departments, setDepartments] = React.useState([]);
   const [modules, setModules] = React.useState({});
-
+  
   const _createModule = async () => {
     let response;
     try {
@@ -82,7 +81,7 @@ const Module = () => {
       <CCol lg={3}>
         <CCard>
           <CCardBody
-            // className={"box-shadow-card"}
+            
             style={{ background: "#551B89", borderRadius: "5px" }}
           >
             <p
@@ -108,10 +107,10 @@ const Module = () => {
 
   return (
     <CCard style={{ height: "80vh" }}>
-      <CCardBody >
+      <CCardBody>
         <CRow>
           <CCol lg={4}>
-            <h1>{`${create.department.label || ''}`} Modules</h1>
+            <h1>{`${create.department.label || ""}`} Modules</h1>
           </CCol>
           <CCol lg={3} style={{ padding: "10px 10px 10px 0px" }}>
             {departments && (
@@ -178,8 +177,14 @@ const Module = () => {
           Object.keys(modules).map((x, i) => (
             <CContainer style={{ marginTop: "20px" }}>
               <CRow>
-                <CCol lg={"12"} style={{ padding: "10px", }}>
-                  <p style={{ fontSize: "14px", fontWeight: "bold", marginLeft:"8px" }}>
+                <CCol lg={"12"} style={{ padding: "10px" }}>
+                  <p
+                    style={{
+                      fontSize: "14px",
+                      fontWeight: "bold",
+                      marginLeft: "8px",
+                    }}
+                  >
                     {String(x).toUpperCase()}
                   </p>
                 </CCol>
@@ -190,10 +195,10 @@ const Module = () => {
         {Object.keys(modules).length === 0 && (
           <CContainer style={{ marginTop: "50px" }}>
             <CRow>
-              <CCol lg={'12'} style={{ textAlign:"center" }}>
-              <p style={{ fontSize: "16px", fontWeight: "bold" }}>
-                    Not Found!
-                  </p>
+              <CCol lg={"12"} style={{ textAlign: "center" }}>
+                <p style={{ fontSize: "16px", fontWeight: "bold" }}>
+                  Not Found!
+                </p>
               </CCol>
             </CRow>
           </CContainer>

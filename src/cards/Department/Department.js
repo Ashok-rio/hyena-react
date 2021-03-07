@@ -46,10 +46,10 @@ const Department = () => {
   const DepartmentCard = ({ name }) => {
     return (
       <CCol lg={3}>
-        <CCard >
+        <CCard>
           <CCardBody
             // className={"box-shadow-card"}
-            style={{ background: "#551B89", borderRadius:'5px' }}
+            style={{ background: "#551B89", borderRadius: "5px" }}
           >
             <p
               style={{
@@ -79,7 +79,8 @@ const Department = () => {
           <CCol lg={5} style={{ padding: "10px 0px 10px 0px" }}>
             <CRow>
               <CCol lg={6}>
-                <CInput style={{height:'38px'}}
+                <CInput
+                  style={{ height: "38px" }}
                   placeholder={"Enter Department"}
                   value={create}
                   onChange={(e) => setCreate(e.target.value)}
@@ -92,7 +93,7 @@ const Department = () => {
                     width: "100%",
                     color: "#fff",
                     fontWeight: "bold",
-                    height:'38px'
+                    height: "38px",
                   }}
                   onClick={() => create !== "" && _createDepartment()}
                 >
