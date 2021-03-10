@@ -44,6 +44,7 @@ const Project = React.lazy(() => import('./cards/Project/Project'));
 const Department = React.lazy(() => import('./cards/Department/Department'));
 const Module = React.lazy(() => import('./cards/Module/Module'));
 const Tools = React.lazy(() => import('./cards/Tools/Tools'));
+const ManageProject = React.lazy(() => import('./cards/Project/ManageProjects'));
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -51,6 +52,7 @@ const routes = [
   { path: '/department', name: 'Department', component: Department, exact: true },
   { path: '/module', name: 'Module', component: Module, exact: true },
   { path: '/tools', name: 'Tools', component: Tools, exact: true },
+  { path: '/project/:projectId', name: 'ManageProject', component: ManageProject, exact: true },
   // { path: '/theme', name: 'Theme', component: Colors, exact: true },
   // { path: '/theme/colors', name: 'Colors', component: Colors },
   // { path: '/theme/typography', name: 'Typography', component: Typography },

@@ -61,7 +61,6 @@ const Module = () => {
 
   const _ModuleDataOrganizer = (module) => {
     const groupUp = _.groupBy(module, "department.name");
-    console.log(groupUp, "groupUp");
     setModules(groupUp);
   };
   const _getAllModules = async () => {
@@ -78,7 +77,7 @@ const Module = () => {
   };
   const ModuleCard = ({ data }) => {
     return data.map((x, i) => (
-      <CCol lg={3}>
+      <CCol lg={3} key={i}>
         <CCard>
           <CCardBody
             

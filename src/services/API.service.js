@@ -103,5 +103,37 @@ export const getAllTools = async (department, module) => {
   }
 };
 
+export const getAllProjects = async (department) => {
+  let response;
+  try {
+    response = await fetch(`${API_URL}/project/getAll?department=${department}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    });
+    if(response) return response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getOneProject = async (id) => {
+  let response;
+  try {
+    response = await fetch(`${API_URL}/project/getOne/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    });
+    if(response) return response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+
 
 

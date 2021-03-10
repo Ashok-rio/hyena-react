@@ -1,5 +1,6 @@
 import 'react-app-polyfill/ie11'; // For IE 11 support
 import 'react-app-polyfill/stable';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import 'core-js';
 import './polyfill'
 import React from 'react';
