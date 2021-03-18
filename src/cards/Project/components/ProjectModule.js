@@ -1,9 +1,11 @@
 import React from "react";
 
-const ProjectModule = () => {
+const ProjectModule = ({data}) => {
+  
   return (
     <React.Fragment>
       <p>Modules</p>
+      <p>{JSON.stringify(data)}</p>
     </React.Fragment>
   );
 };

@@ -4,6 +4,22 @@ const { API_URL, TOKEN } = CONFIG;
 
 const token = localStorage.getItem("token") || TOKEN;
 
+export const login = async (body) => {
+  let response;
+  try {
+    response = await fetch(`${API_URL}/user/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+    if (response) return response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const CreateDepartment = async (dept) => {
   let response;
   try {
@@ -21,6 +37,25 @@ export const CreateDepartment = async (dept) => {
   }
 };
 
+export const getAllUsers = async () => {
+  let response;
+  try {
+    response = await fetch(`${API_URL}/user/getAll`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    });
+    if (response.status === 200) return response.json();
+    if (response.status === 401) {
+      localStorage.removeItem("token");
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const getDepartments = async () => {
   let response;
   try {
@@ -31,7 +66,10 @@ export const getDepartments = async () => {
         Authorization: token,
       },
     });
-    if(response) return response.json();
+    if (response.status === 200) return response.json();
+    if (response.status === 401) {
+      localStorage.removeItem("token");
+    }
   } catch (error) {
     throw error;
   }
@@ -57,14 +95,20 @@ export const CreateModule = async (body) => {
 export const getAllModule = async (department) => {
   let response;
   try {
-    response = await fetch(`${API_URL}/module/getAll?department=${department}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-    });
-    if(response) return response.json();
+    response = await fetch(
+      `${API_URL}/module/getAll?department=${department}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      }
+    );
+    if (response.status === 200) return response.json();
+    if (response.status === 401) {
+      localStorage.removeItem("token");
+    }
   } catch (error) {
     throw error;
   }
@@ -90,14 +134,20 @@ export const CreateTool = async (body) => {
 export const getAllTools = async (department, module) => {
   let response;
   try {
-    response = await fetch(`${API_URL}/tool/getAll?department=${department}&&module=${module}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-    });
-    if(response) return response.json();
+    response = await fetch(
+      `${API_URL}/tool/getAll?department=${department}&&module=${module}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      }
+    );
+    if (response.status === 200) return response.json();
+    if (response.status === 401) {
+      localStorage.removeItem("token");
+    }
   } catch (error) {
     throw error;
   }
@@ -106,14 +156,20 @@ export const getAllTools = async (department, module) => {
 export const getAllProjects = async (department) => {
   let response;
   try {
-    response = await fetch(`${API_URL}/project/getAll?department=${department}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-    });
-    if(response) return response.json();
+    response = await fetch(
+      `${API_URL}/project/getAll?department=${department}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      }
+    );
+    if (response.status === 200) return response.json();
+    if (response.status === 401) {
+      localStorage.removeItem("token");
+    }
   } catch (error) {
     throw error;
   }
@@ -129,11 +185,8 @@ export const getOneProject = async (id) => {
         Authorization: token,
       },
     });
-    if(response) return response.json();
+    if (response) return response.json();
   } catch (error) {
     throw error;
   }
 };
-
-
-

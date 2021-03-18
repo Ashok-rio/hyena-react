@@ -49,6 +49,17 @@ const _nav = [
     //   text: 'NEW',
     // }
   },
+
+  {
+    _tag: "CSidebarNavItem",
+    name: "Users",
+    to: "/users",
+    icon: "cil-user",
+    // badge: {
+    //   color: 'info',
+    //   text: 'NEW',
+    // }
+  },
   
   // {
   //   _tag: 'CSidebarNavTitle',

@@ -20,6 +20,7 @@ const ManageProject = (props) => {
   const { match } = props;
   let { projectId } = match.params;
   const [project, setProject] = React.useState({});
+  const [attributeCount, setAttributeCount] = React.useState();
   const [isLoading, setIsLoading] = React.useState(true);
   const [isOpenAttribute, setIsOpenAttribute] = React.useState(false);
   const [attribute, setAttribute] = React.useState();
@@ -35,6 +36,23 @@ const ManageProject = (props) => {
     }
   };
 
+  const _attributeCountSetter = (data) => {
+    let developers = [];
+    let tasks = [];
+    if (data.Modules.length > 0) {
+      for (let index = 0; index < data.Modules.length; index++) {
+        const element = data.Modules[index];
+        developers = [...developers, ...element.developers];
+        tasks = [...tasks, ...element.tasks];
+      }
+    }
+    setAttributeCount({
+      developers: developers,
+      tasks: tasks,
+      tools: data.DevelopmentTools,
+      modules: data.Modules,
+    });
+  };
   const _getProject = async () => {
     let response;
     try {
@@ -42,6 +60,7 @@ const ManageProject = (props) => {
       if (response) {
         setProject(response.Project);
         setIsLoading(false);
+        _attributeCountSetter(response.Project);
       }
     } catch (error) {
       throw error;
@@ -51,15 +70,13 @@ const ManageProject = (props) => {
   const _attributeRender = () => {
     switch (attribute) {
       case "Modules":
-        return <ProjectModule />;
-
+        return <ProjectModule data={attributeCount?.modules} />;
       case "Developers":
-        return <ProjectDeveloper />;
+        return <ProjectDeveloper data={attributeCount?.developers} />;
       case "Tools":
-        return <ProjectTool />;
+        return <ProjectTool data={attributeCount?.tools} />;
       case "Tasks":
-        return <ProjectTask />;
-
+        return <ProjectTask data={attributeCount?.tasks} />;
       default:
         return {};
     }
@@ -145,10 +162,22 @@ const ManageProject = (props) => {
             <CRow style={{ marginTop: "2%", padding: "10px 10px" }}>
               {!isOpenAttribute ? (
                 <React.Fragment>
-                  <ProjectCountCard name={"Modules"} count={2} />
-                  <ProjectCountCard name={"Developers"} count={5} />
-                  <ProjectCountCard name={"Tools"} count={6} />
-                  <ProjectCountCard name={"Tasks"} count={23} />
+                  <ProjectCountCard
+                    name={"Modules"}
+                    count={attributeCount?.modules.length}
+                  />
+                  <ProjectCountCard
+                    name={"Developers"}
+                    count={attributeCount?.developers.length}
+                  />
+                  <ProjectCountCard
+                    name={"Tools"}
+                    count={attributeCount?.tools.length}
+                  />
+                  <ProjectCountCard
+                    name={"Tasks"}
+                    count={attributeCount?.tasks.length}
+                  />
                 </React.Fragment>
               ) : (
                 _attributeRender()
