@@ -1,3 +1,8 @@
 .c-sidebar{
     background-color: #551b89 !important;
 }
+.CardBox {
+    -webkit-box-shadow: 0 10px 6px -6px #d2d2d2 !important;
+    -moz-box-shadow: 0 10px 6px -6px #d2d2d2 !important;
+    box-shadow: 0 10px 6px -6px #d2d2d2 !important;
+  }

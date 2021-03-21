@@ -191,6 +191,23 @@ export const getOneProject = async (id) => {
   }
 };
 
+export const addProjModule = async (body) => {
+  let response;
+  try {
+    response = await fetch(`${API_URL}/project/addModule`,{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      body:JSON.stringify(body)
+    });
+    if(response.status === 200) return response.json();
+  } catch (error) {
+    throw error
+  }
+}
+
 export const addsNewUser = async (body) => {
   let response;
   try {

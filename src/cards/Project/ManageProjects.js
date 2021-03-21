@@ -70,7 +70,7 @@ const ManageProject = (props) => {
   const _attributeRender = () => {
     switch (attribute) {
       case "Modules":
-        return <ProjectModule data={attributeCount?.modules} />;
+        return <ProjectModule id={projectId} dept={project.department} data={attributeCount?.modules} />;
       case "Developers":
         return <ProjectDeveloper data={attributeCount?.developers} />;
       case "Tools":
@@ -108,6 +108,8 @@ const ManageProject = (props) => {
       </CCard>
     </CCol>
   );
+
+
 
   React.useEffect(() => _getProject(), []);
 

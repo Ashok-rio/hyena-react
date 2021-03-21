@@ -34,7 +34,7 @@ const Department = () => {
   const _getDepartments = async () => {
     let response;
     try {
-      response = await getDepartments();
+      response = await getDepartments();  
       if (response) setDepartments(response.Department);
     } catch (error) {
       throw error;
