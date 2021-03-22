@@ -4,6 +4,7 @@ import MALE from "../../../assets/images/male.png";
 import FEMALE from "../../../assets/images/female.png";
 
 const ProjectDeveloper = ({ data }) => {
+  
   const _defaultImage = (gen) => {
     if (gen === "MALE") {
       return MALE;
@@ -13,6 +14,7 @@ const ProjectDeveloper = ({ data }) => {
   };
 
   console.log(data, 'developers');
+  
 
   const UserCard = ({ user, lg }) => (
     <CCol lg={lg}>

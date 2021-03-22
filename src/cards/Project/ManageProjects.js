@@ -16,6 +16,7 @@ import {
   ProjectTask,
   ProjectTool,
 } from "./components/index";
+import _ from "lodash";
 const ManageProject = (props) => {
   const { match } = props;
   let { projectId } = match.params;
@@ -47,7 +48,7 @@ const ManageProject = (props) => {
       }
     }
     setAttributeCount({
-      developers: developers,
+      developers:_.unionBy(developers, "_id"),
       tasks: tasks,
       tools: data.DevelopmentTools,
       modules: data.Modules,
@@ -70,7 +71,7 @@ const ManageProject = (props) => {
   const _attributeRender = () => {
     switch (attribute) {
       case "Modules":
-        return <ProjectModule id={projectId} dept={project.department} data={attributeCount?.modules} />;
+        return <ProjectModule projectId={projectId} onNav={(path) => props.history.push(path)} dept={project.department} data={attributeCount?.modules} />;
       case "Developers":
         return <ProjectDeveloper data={attributeCount?.developers} />;
       case "Tools":
@@ -132,12 +133,11 @@ const ManageProject = (props) => {
         <React.Fragment>
           <CCardBody>
             <CRow style={{ height: 20 }}>
-              {isOpenAttribute && (
-                <CCol>
+              <CCol>
                   <IoChevronBackCircle
                     size={"2rem"}
                     color={"#551b89"}
-                    onClick={() => _changeAttribute("", false)}
+                    onClick={() =>isOpenAttribute ?  _changeAttribute("", false) : props.history.push('/project')}
                   />
                   <span
                     style={{
@@ -150,7 +150,6 @@ const ManageProject = (props) => {
                     Back
                   </span>
                 </CCol>
-              )}
             </CRow>
             <CRow style={{ marginTop: "2%", padding: "10px 10px" }}>
               <CCol lg={12}>

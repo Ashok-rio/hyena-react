@@ -194,37 +194,71 @@ export const getOneProject = async (id) => {
 export const addProjModule = async (body) => {
   let response;
   try {
-    response = await fetch(`${API_URL}/project/addModule`,{
+    response = await fetch(`${API_URL}/project/addModule`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: token,
       },
-      body:JSON.stringify(body)
+      body: JSON.stringify(body),
     });
-    if(response.status === 200) return response.json();
+    if (response.status === 200) return response.json();
   } catch (error) {
-    throw error
+    throw error;
   }
-}
+};
 
 export const addsNewUser = async (body) => {
   let response;
   try {
+    response = await fetch(`${API_URL}/user/addUser`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      body: JSON.stringify(body),
+    });
+    if (response.status === 200) return response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getProjectModule = async (projectId, moduleId) => {
+  let response;
+  try {
     response = await fetch(
-      `${API_URL}/user/addUser`,
+      `${API_URL}/project/module?projectId=${projectId}&moduleId=${moduleId}`,
       {
-        method: "POST",
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: token,
         },
-        body:JSON.stringify(body)
       }
     );
     if (response.status === 200) return response.json();
-    
   } catch (error) {
     throw error;
   }
-}
+};
+
+export const assignDevModule = async (body) => {
+  let response;
+  try {
+    response = await fetch(`${API_URL}/project/addDeveloper`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      body: JSON.stringify(body),
+    });
+    if (response.status === 200) return response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+
+

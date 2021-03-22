@@ -10,17 +10,16 @@ import React from "react";
 import Select from "react-select";
 import { getAllModule, addProjModule } from "../../../services/API.service";
 
-const ProjectModule = ({ data, dept, id }) => {
+const ProjectModule = (props) => {
+  let { data, dept, projectId, onNav } = props;
   const [exModule, setModule] = React.useState(data);
   const [modules, setModules] = React.useState([]);
-  const [NewModule, setNewModule] = React.useState({});
-  const [moduleView, setModuleView] = React.useState();
-  const [moduleViewToggle, setModuleToggle] = React.useState(false);
+  const [NewModule, setNewModule] = React.useState("");
 
   const _addNewModule = async () => {
     let response;
     try {
-      response = await addProjModule({ id: id, module: NewModule.value });
+      response = await addProjModule({ id: projectId, module: NewModule.value });
       if (response) {
         setModule([...exModule, response.Project]);
         setNewModule({});
@@ -57,29 +56,13 @@ const ProjectModule = ({ data, dept, id }) => {
     }
     _getAllModules(datas);
   };
-  const _setModuleView = (modlueData) => {
-    setModuleView(modlueData);
-    setModuleToggle(true);
-  };
-
-  const ModuleView = ({ name }) => {
-    return (
-      <CContainer fluid>
-        <CRow>
-          <CCol>
-            <h1>{name}</h1>
-          </CCol>
-        </CRow>
-      </CContainer>
-    );
-  };
 
   const ModuleCard = ({ name, Tl, data }) => (
     <CCol lg={2}>
       <CCard
         className={"CardBox"}
         style={{ cursor: "pointer" }}
-        onClick={() => _setModuleView(data)}
+        onClick={() => onNav(`/project/${projectId}/${data._id}`)}
       >
         <CCardBody
           style={{
@@ -144,28 +127,22 @@ const ProjectModule = ({ data, dept, id }) => {
   React.useEffect(() => _getExmodule(), []);
   return (
     <React.Fragment>
-      {!moduleViewToggle ? (
-        <React.Fragment>
-          <CContainer style={{ marginBottom: "20px" }}>
-            <AddModule />
-          </CContainer>
-          <CContainer style={{ marginTop: "20px" }}>
-            <CRow>
-              {exModule?.length > 0 &&
-                exModule.map((x, i) => (
-                  <ModuleCard
-                    key={i}
-                    name={x.module.name}
-                    Tl={x.TL.userName}
-                    data={x}
-                  />
-                ))}
-            </CRow>
-          </CContainer>
-        </React.Fragment>
-      ) : (
-        <ModuleView name={moduleView.module.name}/>
-      )}
+      <CContainer style={{ marginBottom: "20px" }}>
+        <AddModule />
+      </CContainer>
+      <CContainer style={{ marginTop: "20px" }}>
+        <CRow>
+          {exModule?.length > 0 &&
+            exModule.map((x, i) => (
+              <ModuleCard
+                key={i}
+                name={x.module.name}
+                Tl={x.TL.userName}
+                data={x}
+              />
+            ))}
+        </CRow>
+      </CContainer>
     </React.Fragment>
   );
 };
