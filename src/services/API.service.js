@@ -2,7 +2,7 @@ const CONFIG = require("../config/Config");
 
 const { API_URL, TOKEN } = CONFIG;
 
-const token = localStorage.getItem("token") || TOKEN;
+const token = localStorage.getItem("token") || "";
 
 export const login = async (body) => {
   let response;
