@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React  from "react";
 import {
   CRow,
   CCol,
   CCard,
-  CCardHeader,
   CCardBody,
   CContainer,
   CInput,
@@ -102,7 +101,7 @@ const Module = () => {
 
   React.useEffect(() => _getAllModules(), [create.department]);
 
-  React.useEffect(() => _getDepartments(), []);
+  React.useEffect(() => _getDepartments(), [create.department]);
 
   return (
     <CCard style={{ height: "80vh" }}>

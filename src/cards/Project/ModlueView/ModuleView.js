@@ -139,7 +139,7 @@ const ModuleView = (props) => {
       </CCard>
     </React.Fragment>
   );
-  React.useEffect(() => _getProjModule(), []);
+  React.useEffect(() => _getProjModule(), [module]);
   return (
     <React.Fragment>
       <CCard style={{ height: "80vh" }}>

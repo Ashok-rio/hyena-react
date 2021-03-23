@@ -3,9 +3,7 @@ import {
   CRow,
   CCol,
   CCard,
-  CContainer,
   CCardBody,
-  CButton,
 } from "@coreui/react";
 import { getOneProject } from "../../services/API.service";
 import LoadingIndicator from "src/components/LoadingIndicator";
