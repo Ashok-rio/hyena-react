@@ -51,9 +51,10 @@ const ProjectDeveloper = ({ data }) => {
           <CCol
             lg={10}
             style={{
+              paddingLeft:"30px",
               display:"flex",
               justifyContent:"center",
-              alignItems:"center",
+              alignItems:"flex-start",
               flexDirection:"column"
             }}
           >
@@ -66,7 +67,9 @@ const ProjectDeveloper = ({ data }) => {
             >
               {String(user.userName)}
             </span>
-            <span >{user.email}</span>
+            <span style={{
+                fontSize: "10px",
+              }}>{user.email}</span>
           </CCol>
         </CRow>
       </CCard>

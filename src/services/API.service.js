@@ -261,4 +261,37 @@ export const assignDevModule = async (body) => {
   }
 };
 
+export const createProjModuleTask = async (body) => {
+  let response;
+  try {
+    response = await fetch(`${API_URL}/task/create`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      body: JSON.stringify(body),
+    });
+    if (response.status === 200) return response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getProjModuleTask = async (project, moduleId) => {
+  let response;
+  try {
+    response = await fetch(`${API_URL}/task/getAll?Project=${project}&module=${moduleId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    });
+    if (response.status === 200) return response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+
 

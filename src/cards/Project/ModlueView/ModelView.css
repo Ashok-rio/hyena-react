@@ -1,0 +1,9 @@
+.devs::-webkit-scrollbar {
+    display: none !important;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .devs {
+    -ms-overflow-style: none !important;  /* IE and Edge */
+    scrollbar-width: none !important;  /* Firefox */
+  }
