@@ -13,6 +13,7 @@ import {
   getDepartments,
   getAllProjects,
   login,
+  addProject,
 } from "../../services/API.service";
 import _ from "lodash";
 import ModalCard from "../../components/Modal/ModalCard";
@@ -26,6 +27,9 @@ const Project = (props) => {
     userName: "",
     password: "",
   });
+  const initialProject = { name: "", description: "" };
+  const [add, setAdd] = React.useState(initialProject);
+  const [addProjectToggle, setAddProjectToggle] = React.useState(false);
 
   const _ProjectDataOrganizer = (project) => {
     const groupUp = _.groupBy(project, "department.name");
@@ -114,13 +118,32 @@ const Project = (props) => {
       setLoginCard(true);
     }
   }, [login]);
+
+  const _addProject = async () => {
+    let response;
+    let body = {
+      name: add.name,
+      description: add.description,
+      department: selectDepartment.value,
+    };
+    try {
+      response = await addProject(body);
+      if (response) {
+        _getAllprojets();
+        setAddProjectToggle(false);
+        setAdd(initialProject);
+      }
+    } catch (error) {
+      throw error;
+    }
+  };
   return (
     <React.Fragment>
       <CCard style={{ height: "80vh" }}>
         <CCardBody>
           <CRow>
-            <CCol lg={4}>
-              <h1>{`${selectDepartment?.label || ""}`} Projects</h1>
+            <CCol lg={addProjectToggle ? 2 : 5}>
+              <h1>Projects</h1>
             </CCol>
             <CCol lg={3} style={{ padding: "10px 10px 10px 0px" }}>
               {departments && (
@@ -132,44 +155,75 @@ const Project = (props) => {
                 />
               )}
             </CCol>
-            <CCol lg={5} style={{ padding: "10px 0px 10px 0px" }}>
-              <CRow>
-                <CCol lg={2}>
-                  <CButton
-                    style={{
-                      background: "#551B89",
-                      width: "100%",
-                      color: "#fff",
-                      fontWeight: "bold",
-                      height: "38px",
-                    }}
-                    onClick={() => console.log("add")}
-                  >
-                    ADD
-                  </CButton>
-                </CCol>
-                <CCol lg={2}>
-                  <CButton
-                    style={{
-                      background: "#551B89",
-                      width: "100%",
-                      color: "#fff",
-                      fontWeight: "bold",
-                      height: "38px",
-                    }}
-                    onClick={() => setSelectDepartment("")}
-                  >
-                    CLEAR
-                  </CButton>
-                </CCol>
-              </CRow>
+            {addProjectToggle && (
+              <CCol
+                lg={4}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <CInput
+                  style={{ margin: "5px", height: "40px" }}
+                  placeholder={"Name"}
+                  value={add.name}
+                  onChange={(e) => setAdd({ ...add, name: e.target.value })}
+                />
+                <CInput
+                  style={{ margin: "5px", height: "40px" }}
+                  placeholder={"Description"}
+                  value={add.description}
+                  onChange={(e) =>
+                    setAdd({ ...add, description: e.target.value })
+                  }
+                />
+              </CCol>
+            )}
+
+            <CCol
+              lg={3}
+              style={{ padding: "5px", display: "flex", flexDirection: "row" }}
+            >
+              <CButton
+                style={{
+                  margin: "5px",
+                  background: "#551B89",
+                  width: "80%",
+                  color: "#fff",
+                  fontWeight: "bold",
+                  height: "38px",
+                }}
+                onClick={() =>
+                  addProjectToggle ? _addProject() : setAddProjectToggle(true)
+                }
+              >
+                ADD
+              </CButton>
+              <CButton
+                style={{
+                  margin: "5px",
+                  background: "#551B89",
+                  width: "80%",
+                  color: "#fff",
+                  fontWeight: "bold",
+                  height: "38px",
+                }}
+                onClick={() => {
+                  setSelectDepartment("");
+                  setAdd(initialProject);
+                  setAddProjectToggle(false);
+                }}
+              >
+                CLEAR
+              </CButton>
             </CCol>
           </CRow>
         </CCardBody>
         <CCardBody style={{ overflowY: "scroll" }}>
           {projects &&
             Object.keys(projects).map((x, i) => (
-              <CContainer style={{ marginTop: "20px" }}>
+              <CContainer key={i} style={{ marginTop: "20px" }}>
                 <CRow>
                   <CCol lg={"12"} style={{ padding: "10px" }}>
                     <p

@@ -26,7 +26,6 @@ import LoadingIndicator from "src/components/LoadingIndicator";
 const ModuleView = (props) => {
   const { match } = props;
   let { projectId, moduleId } = match.params;
-
   const [module, setModule] = React.useState({});
   const [users, setUsers] = React.useState([]);
   const [newUser, setNewUser] = React.useState("");
@@ -65,8 +64,15 @@ const ModuleView = (props) => {
           ...module,
           developers: devs,
         });
+        console.log(response.Dev, "tms");
         setNewUser("");
-        // setAssignUser([...assignUser ,  {label:devs.userName, value:devs._id}]);
+        setAssignUser([
+          ...assignUser,
+          {
+            label: String(response.Dev.userName).toUpperCase(),
+            value: response.Dev._id,
+          },
+        ]);
       }
     } catch (error) {
       throw error;
@@ -111,9 +117,13 @@ const ModuleView = (props) => {
     try {
       response = await getProjectModule(projectId, moduleId);
       if (response) {
+        console.log(response, "tms");
         setModule({ ...response.Module, projectName: response.projectName });
         _getAllUsers(response.Module.developers);
       }
+      // if(!response){
+
+      // }
     } catch (error) {
       throw error;
     }
@@ -205,11 +215,11 @@ const ModuleView = (props) => {
     };
     try {
       response = await createProjModuleTask(body);
+      console.log(response, "taskcreateResponse");
       if (response) {
-        console.log(response);
-        setCreateTask(initialTaskState);
         setTasks([...Tasks, response.Task]);
         setTaskToogle(false);
+        setCreateTask(initialTaskState);
       }
     } catch (error) {
       throw error;
@@ -219,280 +229,268 @@ const ModuleView = (props) => {
   return (
     <React.Fragment>
       <CCard style={{ height: "80vh" }}>
-        {module && module?.developers?.length > 0 ? (
-          <CCardBody>
-            <CRow style={{ height: 20 }}>
-              <CCol lg={6}>
-                <IoChevronBackCircle
-                  size={"2rem"}
-                  color={"#551b89"}
-                  onClick={() => props.history.push(`/project/${projectId}`)}
-                />
-                <span
-                  style={{
-                    marginLeft: "10px",
-                    fontSize: "16px",
-                    color: "#551B89",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Back
-                </span>
-              </CCol>
-              <CCol lg={4} style={{}}>
-                <Select
-                  options={users}
-                  value={newUser}
-                  onChange={(e) => setNewUser(e)}
-                  placeholder={"Select User"}
-                />
-              </CCol>
-              <CCol lg={2}>
-                <CButton
-                  style={{
-                    width: "50%",
-                    color: "#fff",
-                    fontWeight: "bold",
-                    background: "#551b89",
-                  }}
-                  onClick={() => _assignDev()}
-                >
-                  ADD
-                </CButton>
-              </CCol>
-            </CRow>
-            <CRow style={{ marginTop: "2%", padding: "10px 10px" }}>
-              <CCol lg={6}>
-                <h1
-                  style={{
-                    color: "#551B89",
-                  }}
-                >
-                  {module?.projectName} - {module?.module?.name}
-                </h1>
-              </CCol>
-              <CCol lg={3}></CCol>
-              <CCol
-                lg={3}
+        <CCardBody>
+          <CRow style={{ height: 20 }}>
+            <CCol lg={6}>
+              <IoChevronBackCircle
+                size={"2rem"}
+                color={"#551b89"}
+                onClick={() => props.history.push(`/project/${projectId}`)}
+              />
+              <span
                 style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
+                  marginLeft: "10px",
+                  fontSize: "16px",
+                  color: "#551B89",
+                  fontWeight: "bold",
                 }}
               >
-                <p
-                  style={{
-                    margin: "10px",
-                    color: "#551B89",
-                    fontSize: "18px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  TL :
-                </p>
-                <p
-                  style={{
-                    color: "gray",
-                    margin: "10px",
-                    textTransform: "capitalize",
-                    fontSize: "18px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {module?.TL?.userName}
-                </p>
-                <p
-                  style={{
-                    color: "gray",
-                    margin: "10px",
-                    fontSize: "18px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {module?.TL?.email}
-                </p>
-              </CCol>
-            </CRow>
-            <CRow style={{ marginTop: "2%" }}>
-              <CCol lg={9}></CCol>
-              <CCol></CCol>
-              <CCol lg={2}>
-                <CButton
-                  style={{
-                    margin: "10px",
-                    width: "60%",
-                    color: "#fff",
-                    fontWeight: "bold",
-                    background: "#551b89",
-                  }}
-                  onClick={() =>
-                    !taskToggle ? setTaskToogle(true) : setTaskToogle(false)
-                  }
-                >
-                  {!taskToggle ? "CREATE TASK" : "VIEW TASKS"}
-                </CButton>
-              </CCol>
-            </CRow>
-            <CRow style={{ marginTop: "2%", padding: "10px 10px" }}>
-              <CCol lg={9}>
-                {!taskToggle ? (
-                  <CDataTable
-                    items={Tasks}
-                    fields={[
-                      {
-                        label: "Task",
-                        key: "name",
-                        _style: { width: "250px" },
-                      },
-                      {
-                        label: "Description",
-                        key: "Description",
-                        _style: { width: "300px" },
-                      },
-                      {
-                        label: "AssignTo",
-                        key: "assignedTo",
-                      },
-                      {
-                        label: "AssignFrom",
-                        key: "assignedFrom",
-                      },
-                      {
-                        label: "Status",
-                        key: "status",
-                      },
-                    ]}
-                  />
-                ) : (
-                  <CContainer>
-                    <CRow>
-                      <CCol lg={6}>
-                        <CInput
-                          placeholder={"Create Task Name"}
-                          value={createTask.name}
-                          onChange={(e) =>
-                            setCreateTask({
-                              ...createTask,
-                              name: e.target.value,
-                            })
-                          }
-                        />
-                      </CCol>
-                      <CCol lg={6}>
-                        <Select
-                          options={assignUser}
-                          placeholder={"Select Developer"}
-                          value={createTask.developer}
-                          onChange={(e) =>
-                            setCreateTask({ ...createTask, developer: e })
-                          }
-                        />
-                      </CCol>
-                    </CRow>
-                    <CRow style={{ marginTop: "20px" }}>
-                      <CCol lg={12}>
-                        <textarea
-                          style={{
-                            height: "100px",
-                            display: "block",
-                            width: "100%",
-                            padding: "0.375rem 0.75rem",
-                            fontSize: "0.875rem",
-                            fontWeight: 400,
-                            lineHeight: 1.5,
-                            backgroundClip: "padding-box",
-                            border: "1px solid",
-                            color: "#768192",
-                            backgroundColor: "#fff",
-                            borderColor: "#d8dbe0",
-                            borderRadius: "0.25rem",
-                          }}
-                          placeholder={"Description"}
-                          type={"text"}
-                          value={createTask.description}
-                          onChange={(e) =>
-                            setCreateTask({
-                              ...createTask,
-                              description: e.target.value,
-                            })
-                          }
-                        />
-                      </CCol>
-                    </CRow>
-                    <CRow style={{ marginTop: "20px" }}>
-                      <CCol
-                        lg={12}
+                Back
+              </span>
+            </CCol>
+            <CCol lg={4} style={{}}>
+              <Select
+                options={users}
+                value={newUser}
+                onChange={(e) => setNewUser(e)}
+                placeholder={"Select User"}
+              />
+            </CCol>
+            <CCol lg={2}>
+              <CButton
+                style={{
+                  width: "50%",
+                  color: "#fff",
+                  fontWeight: "bold",
+                  background: "#551b89",
+                }}
+                onClick={() => _assignDev()}
+              >
+                ADD
+              </CButton>
+            </CCol>
+          </CRow>
+          <CRow style={{ marginTop: "2%", padding: "10px 10px" }}>
+            <CCol lg={6}>
+              <h1
+                style={{
+                  color: "#551B89",
+                }}
+              >
+                {module?.projectName} - {module?.module?.name}
+              </h1>
+            </CCol>
+            <CCol lg={3}></CCol>
+            <CCol
+              lg={3}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <p
+                style={{
+                  margin: "10px",
+                  color: "#551B89",
+                  fontSize: "18px",
+                  fontWeight: "bold",
+                }}
+              >
+                TL :
+              </p>
+              <p
+                style={{
+                  color: "gray",
+                  margin: "10px",
+                  textTransform: "capitalize",
+                  fontSize: "18px",
+                  fontWeight: "bold",
+                }}
+              >
+                {module?.TL?.userName}
+              </p>
+              <p
+                style={{
+                  color: "gray",
+                  margin: "10px",
+                  fontSize: "18px",
+                  fontWeight: "bold",
+                }}
+              >
+                {module?.TL?.email}
+              </p>
+            </CCol>
+          </CRow>
+          <CRow style={{ marginTop: "2%" }}>
+            <CCol lg={9}></CCol>
+            <CCol></CCol>
+            <CCol lg={2}>
+              <CButton
+                style={{
+                  margin: "10px",
+                  width: "60%",
+                  color: "#fff",
+                  fontWeight: "bold",
+                  background: "#551b89",
+                }}
+                onClick={() =>
+                  !taskToggle ? setTaskToogle(true) : setTaskToogle(false)
+                }
+              >
+                {!taskToggle ? "CREATE TASK" : "VIEW TASKS"}
+              </CButton>
+            </CCol>
+          </CRow>
+          <CRow style={{ marginTop: "2%", padding: "10px 10px" }}>
+            <CCol lg={9}>
+              {!taskToggle ? (
+                <CDataTable
+                  items={Tasks}
+                  fields={[
+                    {
+                      label: "Task",
+                      key: "name",
+                      _style: { width: "250px" },
+                    },
+                    {
+                      label: "Description",
+                      key: "Description",
+                      _style: { width: "300px" },
+                    },
+                    {
+                      label: "AssignTo",
+                      key: "assignedTo",
+                    },
+                    {
+                      label: "AssignFrom",
+                      key: "assignedFrom",
+                    },
+                    {
+                      label: "Status",
+                      key: "status",
+                    },
+                  ]}
+                />
+              ) : (
+                <CContainer>
+                  <CRow>
+                    <CCol lg={6}>
+                      <CInput
+                        placeholder={"Create Task Name"}
+                        value={createTask.name}
+                        onChange={(e) =>
+                          setCreateTask({
+                            ...createTask,
+                            name: e.target.value,
+                          })
+                        }
+                      />
+                    </CCol>
+                    <CCol lg={6}>
+                      <Select
+                        options={assignUser}
+                        placeholder={"Select Developer"}
+                        value={createTask.developer}
+                        onChange={(e) =>
+                          setCreateTask({ ...createTask, developer: e })
+                        }
+                      />
+                    </CCol>
+                  </CRow>
+                  <CRow style={{ marginTop: "20px" }}>
+                    <CCol lg={12}>
+                      <textarea
                         style={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
+                          height: "100px",
+                          display: "block",
+                          width: "100%",
+                          padding: "0.375rem 0.75rem",
+                          fontSize: "0.875rem",
+                          fontWeight: 400,
+                          lineHeight: 1.5,
+                          backgroundClip: "padding-box",
+                          border: "1px solid",
+                          color: "#768192",
+                          backgroundColor: "#fff",
+                          borderColor: "#d8dbe0",
+                          borderRadius: "0.25rem",
+                        }}
+                        placeholder={"Description"}
+                        type={"text"}
+                        value={createTask.description}
+                        onChange={(e) =>
+                          setCreateTask({
+                            ...createTask,
+                            description: e.target.value,
+                          })
+                        }
+                      />
+                    </CCol>
+                  </CRow>
+                  <CRow style={{ marginTop: "20px" }}>
+                    <CCol
+                      lg={12}
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <CButton
+                        style={{
+                          margin: "10px",
+                          width: "20%",
+                          color: "#fff",
+                          fontWeight: "bold",
+                          background: "#551b89",
+                        }}
+                        onClick={() => _createTask()}
+                      >
+                        ADD
+                      </CButton>
+                      <CButton
+                        style={{
+                          width: "20%",
+                          color: "#fff",
+                          fontWeight: "bold",
+                          background: "#551b89",
+                        }}
+                        onClick={() => {
+                          setCreateTask(initialTaskState);
+                          setTaskToogle(false);
                         }}
                       >
-                        <CButton
-                          style={{
-                            margin: "10px",
-                            width: "20%",
-                            color: "#fff",
-                            fontWeight: "bold",
-                            background: "#551b89",
-                          }}
-                          onClick={() => _createTask()}
-                        >
-                          ADD
-                        </CButton>
-                        <CButton
-                          style={{
-                            width: "20%",
-                            color: "#fff",
-                            fontWeight: "bold",
-                            background: "#551b89",
-                          }}
-                          onClick={() => {
-                            setCreateTask(initialTaskState);
-                            setTaskToogle(false);
-                          }}
-                        >
-                          CANCEL
-                        </CButton>
-                      </CCol>
-                    </CRow>
-                  </CContainer>
-                )}
-              </CCol>
-              {/* <CCol lg={3}></CCol> */}
-              {module?.developers?.length > 0 && (
-                <CCol
-                  lg={3}
-                  className={"devs"}
-                  style={{
-                    padding: "0px",
-                    overflowY: "scroll",
-                    height: "400px",
-                  }}
-                >
-                  {module?.developers?.map((x, i) => (
-                    <DeveloperCard
-                      key={i}
-                      name={x.userName}
-                      email={x.email}
-                      gender={x.gender}
-                    />
-                  ))}
-                </CCol>
+                        CANCEL
+                      </CButton>
+                    </CCol>
+                  </CRow>
+                </CContainer>
               )}
-            </CRow>
-          </CCardBody>
-        ) : (
-          <CCardBody
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <LoadingIndicator type={"ThreeDots"} color={"#551B89"} />
-          </CCardBody>
-        )}
+            </CCol>
+            {/* <CCol lg={3}></CCol> */}
+            {module?.developers?.length > 0 && (
+              <CCol
+                lg={3}
+                className={"devs"}
+                style={{
+                  padding: "0px",
+                  overflowY: "scroll",
+                  height: "400px",
+                }}
+              >
+                {module?.developers?.map((x, i) => (
+                  <DeveloperCard
+                    key={i}
+                    name={x.userName}
+                    email={x.email}
+                    gender={x.gender}
+                  />
+                ))}
+              </CCol>
+            )}
+          </CRow>
+        </CCardBody>
       </CCard>
     </React.Fragment>
   );

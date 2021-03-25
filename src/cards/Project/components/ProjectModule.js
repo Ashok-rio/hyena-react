@@ -23,11 +23,14 @@ const ProjectModule = (props) => {
       if (response) {
         setModule([...exModule, response.Project]);
         setNewModule({});
+        window.location.reload();
       }
     } catch (error) {
       throw error;
     }
   };
+
+  console.log(exModule, 'exModule', 'tms');
 
   const _getAllModules = async (exm) => {
     let response;
@@ -57,12 +60,12 @@ const ProjectModule = (props) => {
     _getAllModules(datas);
   };
 
-  const ModuleCard = ({ name, Tl, data }) => (
+  const ModuleCard = ({ name, Tl, data , moduleId}) => (
     <CCol lg={2}>
       <CCard
         className={"CardBox"}
         style={{ cursor: "pointer" }}
-        onClick={() => onNav(`/project/${projectId}/${data._id}`)}
+        onClick={() => onNav(`/project/${projectId}/${moduleId}`)}
       >
         <CCardBody
           style={{
@@ -137,6 +140,7 @@ const ProjectModule = (props) => {
               <ModuleCard
                 key={i}
                 name={x.module.name}
+                moduleId={x.module._id}
                 Tl={x.TL.userName}
                 data={x}
               />

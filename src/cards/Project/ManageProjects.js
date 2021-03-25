@@ -66,6 +66,8 @@ const ManageProject = (props) => {
     }
   };
 
+  console.log(attributeCount,'attributeCount', 'tms');
+
   const _attributeRender = () => {
     switch (attribute) {
       case "Modules":
@@ -75,7 +77,7 @@ const ManageProject = (props) => {
       case "Tools":
         return <ProjectTool data={attributeCount?.tools} />;
       case "Tasks":
-        return <ProjectTask data={attributeCount?.tasks} />;
+        return <ProjectTask projectId={projectId} data={attributeCount?.tasks} />;
       default:
         return {};
     }

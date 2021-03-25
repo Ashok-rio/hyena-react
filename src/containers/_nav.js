@@ -39,16 +39,16 @@ const _nav = [
     // }
   },
   
-  {
-    _tag: "CSidebarNavItem",
-    name: "Tasks",
-    to: "/projects",
-    icon: "cil-puzzle",
-    // badge: {
-    //   color: 'info',
-    //   text: 'NEW',
-    // }
-  },
+  // {
+  //   _tag: "CSidebarNavItem",
+  //   name: "Tasks",
+  //   to: "/projects",
+  //   icon: "cil-puzzle",
+  //   // badge: {
+  //   //   color: 'info',
+  //   //   text: 'NEW',
+  //   // }
+  // },
 
   {
     _tag: "CSidebarNavItem",
