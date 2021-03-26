@@ -25,6 +25,7 @@ const AddTool = ({ onBack }) => {
     url: "",
     module: "",
     department: "",
+    image: "",
   };
   const [create, setCreate] = React.useState(initialState);
   const [department, setDepartment] = React.useState([]);
@@ -38,6 +39,7 @@ const AddTool = ({ onBack }) => {
       url: create.url,
       module: create.module.value,
       department: create.department.value,
+      image: create.image,
     };
     let response;
     try {
@@ -49,7 +51,7 @@ const AddTool = ({ onBack }) => {
       throw error;
     }
   };
-  
+
   const _getDeptByModule = async (id) => {
     let response;
     try {
@@ -163,6 +165,16 @@ const AddTool = ({ onBack }) => {
               placeholder={"Enter Description"}
               value={create.use}
               onChange={(e) => setCreate({ ...create, use: e.target.value })}
+            />
+          </CCol>
+        </CRow>
+        <CRow style={{ margin: "50px" }}>
+          <CCol lg={12}>
+            <CInput
+              style={{ height: "50px" }}
+              placeholder={"Enter Image URL"}
+              value={create.image}
+              onChange={(e) => setCreate({ ...create, image: e.target.value })}
             />
           </CCol>
         </CRow>
